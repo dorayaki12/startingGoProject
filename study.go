@@ -1,26 +1,21 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
-	s := "A"
-	switch s {
-	case "A":
-		s += "B"
-		fallthrough
-	case "B":
-		s += "C"
-		fallthrough
-	case "C":
-		s += "D"
-		fallthrough
-	case "D":
-		s += "E"
-		fallthrough
+	var x interface{} = 3
 
-	default:
-		s += "E"
+	/* 変数xはinterface{}型 */
+	if x == nil {
+		fmt.Println("x is nil")
+	} else if i, isInt := x.(int); isInt {
+		fmt.Printf("x is integer : %d\n", i)
+	} else if s, isString := x.(string); isString {
 		fmt.Println(s)
+	} else {
+		fmt.Println("unsupported type")
 	}
 
 }
