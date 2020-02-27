@@ -1,28 +1,39 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
-func pow(a [3]int) {
-	/* 配列の各要素を２乗する */
-	for i, v := range a {
-		a[i] = v * v
+func receive(name string, ch <-chan int) {
+	for {
+		i, ok := <-ch
+		if !ok {
+			break // 受信できなくなったら終了
+		}
+		fmt.Println(name, i)
 	}
-}
+	fmt.Println(name + "is done")
 
-func pow_slice(a []int) {
-	/* スライスの各要素を２乗する */
-	for i, v := range a {
-		a[i] = v * v
-	}
 }
 
 func main() {
-	/* ３要素の配列 */
-	a := [3]int{1, 2, 3}
-	pow(a)
-	/* ３要素のスライス */
-	b := []int{1, 2, 3}
-	pow_slice(b)
-	fmt.Println(a)
-	fmt.Println(b)
+	ch := make(chan int, 20)
+
+	go receive("1st goroutine", ch)
+	go receive("2nd goroutine", ch)
+	go receive("3rd goroutine", ch)
+
+	i := 0
+	for i < 100 {
+		ch <- i
+		i++
+		time.Sleep(50 * time.Millisecond)
+	}
+
+	close(ch)
+
+	// ゴルーチンの完了を３秒待つ
+	time.Sleep(3 * time.Second)
+
 }
