@@ -4,17 +4,6 @@ import (
 	"fmt"
 )
 
-func receive(name string, ch <-chan int) {
-	for {
-		i, ok := <-ch
-		if !ok {
-			break // 受信できなくなったら終了
-		}
-		fmt.Println(name, i)
-	}
-	fmt.Println(name + "is done")
-}
-
 func main() {
 	ch1 := make(chan int, 1)
 	ch2 := make(chan int, 2)
