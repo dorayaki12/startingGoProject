@@ -1,25 +1,16 @@
 package main
 
-import (
-	"fmt"
-)
-
-func inc(p *int) {
-	*p++
-}
+import "fmt"
 
 func main() {
-	var i int
-	p := &i
-	i = 5
-	fmt.Println(*p)
+	a := [3]string{"Apple", "Banana", "Cherry"}
+	p := &a
+	fmt.Println(a[1])
+	p[1] = "Wasabi"
+	fmt.Println(a[1])
 
-	inc(&i)
-	inc(&i)
-	inc(&i)
-	inc(&i)
-	inc(&i)
+	fmt.Println(a[2])
+	p[2] = "Grape"
+	fmt.Println(a[2])
 
-	fmt.Println(i)
-	fmt.Println(p)
 }
